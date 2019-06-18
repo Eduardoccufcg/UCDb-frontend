@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="br">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -18,10 +18,14 @@
                 title="Universidade Federal de Campina Grande">UFCG</abbr>.
     </p>
     <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Criar Minha Conta</a>
+        <a class="btn btn-info btn-lg" href="#" role="button">Criar Minha Conta</a>
     </p>
 </div>
 <div class="container">
+    <h3 class="text-center">Autenticação de Usuário</h3>
+
+    <div id="error"></div>
+
     <form id="authForm">
         <div class="form-group">
             <label for="email">E-mail</label>
@@ -31,7 +35,7 @@
             <label for="password">Senha</label>
             <input type="password" class="form-control" id="password" placeholder="Informe sua senha." required>
         </div>
-        <button type="button" class="btn btn-primary">Entrar</button>
+        <button type="submit" class="btn btn-primary">Entrar</button>
     </form>
 </div>
 

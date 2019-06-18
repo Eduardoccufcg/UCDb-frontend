@@ -2,6 +2,14 @@ import { API_URL } from "../constants.js";
 
 const apiUrl = API_URL + "/auth";
 
+async function handlerError(response) {
+    if (!response.ok) {
+        throw new Error((await response.json()).message);
+    }
+
+    return response.json();
+}
+
 export async function doLogin(email, password) {
     let response = await fetch(apiUrl + "/login", {
         method: 'POST',
@@ -11,6 +19,6 @@ export async function doLogin(email, password) {
             'Content-Type': 'application/json'
         }
     });
-    let data = await response.json();
-    console.log(data);
+
+    return handlerError(response);
 }
