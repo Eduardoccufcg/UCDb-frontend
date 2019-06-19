@@ -11,6 +11,26 @@
     <title>UCDb</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">UCDb</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Sair</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Buscar disciplinas" aria-label="Search">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Pesquisar</button>
+        </form>
+    </div>
+</nav>
 <div class="jumbotron">
     <h1 class="display-4">UCDb</h1>
     <p class="lead">Classificações e <em>reviews</em> de Cursos da <abbr title="Universidade Federal de Campina Grande">UFCG</abbr>.
@@ -19,36 +39,7 @@
     </p>
 </div>
 <div class="container">
-    <h3 class="text-center">Criar Minha Conta</h3>
-    <div id="error"></div>
-    <form id="userForm">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="firstName">Primeiro Nome</label>
-                <input type="text" class="form-control" id="firstName" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="lastName">Último Nome</label>
-                <input type="text" class="form-control" id="lastName" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" class="form-control" id="email" required>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="password">Senha</label>
-                <input type="password" class="form-control" id="password" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="repeatPassword">Repetir Senha</label>
-                <input type="password" class="form-control" id="repeatPassword" required>
-            </div>
-        </div>
-        <button type="button" class="btn btn-secondary" onclick="window.location.href = 'auth.html'">Cancelar</button>
-        <button type="submit" class="btn btn-primary">Confirmar</button>
-    </form>
+    <h3 class="text-center">Bem-vindo!</h3>
 </div>
 
 <!-- Optional JavaScript -->
@@ -63,4 +54,5 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
+<script type="module" src="../controllers/MainController.js"></script>
 </html>

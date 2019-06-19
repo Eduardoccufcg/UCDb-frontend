@@ -12,6 +12,7 @@ async function login(event) {
         const password = document.getElementById('password').value;
         const data = await doLogin(email, password);
         TokenService.setToken(data.token);
+        window.location.href = 'welcome.html';
     } catch (error) {
         showError(error.message);
     }
