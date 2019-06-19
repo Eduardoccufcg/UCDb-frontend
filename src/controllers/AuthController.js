@@ -1,4 +1,5 @@
-import { doLogin } from "./services/AuthService.js";
+import { doLogin }  from "../services/AuthService.js";
+import TokenService from '../services/TokenService.js';
 
 document
     .querySelector('#authForm')
@@ -10,6 +11,7 @@ async function login(event) {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const data = await doLogin(email, password);
+        TokenService.setToken(data.token);
     } catch (error) {
         showError(error.message);
     }
