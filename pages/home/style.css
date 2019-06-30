@@ -76,16 +76,19 @@ input{
     transition: all 1s;
 }
 
-#searchSubject:hover{
+#searchSubject:hover,
+#searchSubject.hover {
     width: 500px;
     cursor: pointer;
 }
 
-#searchSubject:hover input{
+#searchSubject:hover input,
+#searchSubject.hover input{
     display: block;
 }
 
-#searchSubject:hover .fa{
+#searchSubject:hover .fa,
+#searchSubject.hover .fa {
     background: #00507c;
     color: white;
 }
@@ -106,3 +109,11 @@ header#main-header {
     padding: 0 20px;
 }
 
+header#main-header .brand {
+    grid-area: logo;
+    justify-self: start;
+}
+
+header#main-header .brand img{
+    height: 40px;
+}

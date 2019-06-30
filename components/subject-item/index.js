@@ -58,7 +58,7 @@ class SubjectItem extends HTMLElement {
                 }
                 .subject-item .detail {
                     grid-area: detail;
-                    justify-self: center;
+                    justify-self: end;
                     align-self: center;
                 }
                 .button {
