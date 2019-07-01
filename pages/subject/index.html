@@ -1,7 +1,111 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+    <title>UCDb</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/b479fc7b22.js"></script>
+</head>
+<body>
+<header id="main-header"></header>
 <main>
-    <div></div>
+    <article>
+        <section id="subject">
+            <div class="container">
+                <header>
+                    <h1><small>Código: 53</small>LABORATÓRIO DE REDES DE COMPUTADORES TAL COISA E TAL</h1>
+                    <div class="button-like">
+                        <button class="liked">
+                            <i class="fas fa-heart"></i>Curtiu
+                        </button>
+                        <span>
+                            <strong>100</strong> curtidas
+                        </span>
+                    </div>
+                </header>
+            </div>
+        </section>
+
+        <section id="comments">
+            <div class="container">
+                <header>
+                    <i class="fas fa-comments"></i> Comentários
+                </header>
+                <div class="comment">
+                    <a class="avatar">
+                        <img src="avatar.png">
+                    </a>
+                    <div class="content">
+                        <a class="author">Elliot Fu</a>
+                        <div class="metadata">
+                            <span class="date">Today at 5:42PM</span>
+                        </div>
+                        <div class="text">
+                            How artistic!
+                        </div>
+                        <div class="actions">
+                            <a class="reply">Reply</a>
+                        </div>
+                    </div>
+                    <div class="comments">
+                        <div class="comment">
+                            <a class="avatar">
+                                <img src="avatar.png">
+                            </a>
+                            <div class="content">
+                                <a class="author">Jenny Hess</a>
+                                <div class="metadata">
+                                    <span class="date">Just now</span>
+                                </div>
+                                <div class="text">
+                                    Elliot you are always so right :)
+                                </div>
+                                <div class="actions">
+                                    <a class="reply">Reply</a>
+                                </div>
+                                <form>
+                                    <div class="field">
+                                        <textarea spellcheck="false"></textarea>
+                                    </div>
+                                    <button class="reply">
+                                        <i class="fas fa-edit"></i> Add Reply
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment">
+                    <a class="avatar">
+                        <img src="avatar.png">
+                    </a>
+                    <div class="content">
+                        <a class="author">Elliot Fu</a>
+                        <div class="metadata">
+                            <span class="date">Today at 5:42PM</span>
+                        </div>
+                        <div class="text">
+                            How artistic!
+                        </div>
+                        <div class="actions">
+                            <a class="reply">Reply</a>
+                            <a class="reply">Remove</a>
+                        </div>
+                    </div>
+                </div>
+                <form>
+                    <div class="field">
+                        <textarea spellcheck="false"></textarea>
+                    </div>
+                    <button class="reply">
+                        <i class="fas fa-edit"></i> Add Comment
+                    </button>
+                </form>
+            </div>
+        </section>
+    </article>
 </main>
 <script type="module" src="./app.js"></script>
-
-
-
+</body>
+</html>

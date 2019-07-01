@@ -29,7 +29,9 @@ class HeaderMenu extends HTMLElement {
         if (this.logged === 'true' || this.logged === '1') {
             return `<li id="logout"><a href="#">Sair</a></li>`;
         } else {
-            return '<li><a href="../login/index.html">Entrar</a></li>';
+            return `
+                <li><a href="../user/index.html">Cadastrar</a></li>
+                <li><a href="../login/index.html">Entrar</a></li>`;
         }
     }
 
@@ -92,11 +94,8 @@ class HeaderMenu extends HTMLElement {
             }
             header #user-logged {
                 grid-area: user;
-                align-content: center;
-                justify-self: center;
                 border-right: 1px dashed #2b87e9;
                 padding: 0 10px;
-                height: 50%;
             }
         </style>
         <header>

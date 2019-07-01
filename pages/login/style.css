@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+i.fas {
+    margin-right: 5px;
+}
+
 html {
     background-color: #00507c;
     display: grid;

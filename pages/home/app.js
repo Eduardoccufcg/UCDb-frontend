@@ -1,20 +1,32 @@
 import '../../components/subject-item/index.js';
 import '../../components/alert-message/index.js';
 import '../../components/header-menu/index.js';
-import TokenService  from '../../services/TokenService.js';
+import TokenService                   from '../../services/TokenService.js';
 import { searchSubjects, getSubject } from '../../services/SubjectService.js';
 
 document
     .querySelector('#searchSubject input')
-    .addEventListener('keyup', search);
 
-function init() {
+
+function addHeader() {
     const $header = document.getElementById('main-header');
     const $headerElement = document.createElement('header-menu');
     $headerElement.setAttribute('username', TokenService.getUserLoggedId());
     $headerElement.setAttribute('logged', TokenService.isLogged().toString());
     $headerElement.addEventListener('logout', TokenService.logout);
     $header.appendChild($headerElement);
+}
+
+function init() {
+    const $searchBar = document.querySelector('#searchSubject input');
+    $searchBar.addEventListener('keyup', search);
+    $searchBar.addEventListener('focus', event => event.target.parentElement.classList.add('hover'));
+    $searchBar.addEventListener('blur', event => {
+       if(event.target.value === '') {
+           event.target.parentElement.classList.remove('hover');
+       }
+    });
+    addHeader();
 }
 
 async function search(event) {
@@ -34,9 +46,8 @@ async function search(event) {
                     $subject.setAttribute('name', subject.name);
                     $subject.setAttribute('show-detail', TokenService.isLogged().toString());
                     $subject.addEventListener('detail', event => {
-                        console.log(event.detail.code);
-                        console.log(event.detail);
-                        showDetail(event.detail.code);
+                        //showDetail(event.detail.code);
+                        window.location.href = `../subject/index.html?id=${event.detail.code}`;
                     });
                     $result.appendChild($subject);
                 });
@@ -58,7 +69,7 @@ async function showDetail(idSubject) {
     try {
         const subject = await getSubject(idSubject, TokenService.getUserLoggedId());
         console.log(subject);
-    }catch (e) {
+    } catch (e) {
         console.log(e);
     }
 }
