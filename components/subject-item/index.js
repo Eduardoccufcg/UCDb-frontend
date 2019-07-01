@@ -9,6 +9,18 @@ class SubjectItem extends HTMLElement {
         this.name = this.getAttribute('name');
         this.showDetail = this.getAttribute('show-detail');
         this.render();
+
+        this.detailEvent = new CustomEvent('detail', {
+            bubbles: true,
+            cancelable: false,
+            composed: true,
+            detail: {
+                code: this.code,
+                name: this.name
+            }
+        });
+
+        this.addEventDetail();
     }
 
     showButtonDetail() {
@@ -20,6 +32,17 @@ class SubjectItem extends HTMLElement {
         }
 
         return '';
+    }
+
+    addEventDetail() {
+        const $buttonDetail = this.$shadow.querySelector('.button');
+
+        if (this.$shadow.contains($buttonDetail)) {
+            $buttonDetail.addEventListener('click', event => {
+                event.preventDefault();
+                this.dispatchEvent(this.detailEvent)
+            });
+        }
     }
 
     render() {

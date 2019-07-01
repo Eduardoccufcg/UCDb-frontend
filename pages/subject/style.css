@@ -95,8 +95,8 @@ input {
 
 header#main-header {
     display: grid;
-    grid-template-columns: 1fr auto auto;
-    grid-template-areas: "logo user menu";
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "logo menu";
     grid-column-gap: 1em;
     align-items: center;
     background-color: #002f55;
@@ -144,19 +144,4 @@ header#main-header ul li a {
 header#main-header ul li a:hover {
     color: #2b87e9;
     border-bottom:3px solid #285daf;
-}
-
-header#main-header #user-logged {
-    grid-area: user;
-    align-content: center;
-    justify-self: center;
-    border-right: 1px dashed #2b87e9;
-    padding: 0 10px;
-    height: 50%;
-}
-
-header#main-header #user-logged span {
-    font-size: 25px;
-    margin-right: 5px;
-    color: #2b87e9;
 }

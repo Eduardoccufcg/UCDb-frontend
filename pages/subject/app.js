@@ -1,6 +1,5 @@
 import '../../components/subject-item/index.js';
 import '../../components/alert-message/index.js';
-import '../../components/header-menu/index.js';
 import TokenService  from '../../services/TokenService.js';
 import { searchSubjects } from '../../services/SubjectService.js';
 
@@ -9,12 +8,7 @@ document
     .addEventListener('keyup', search);
 
 function init() {
-    const $header = document.getElementById('main-header');
-    const $headerElement = document.createElement('header-menu');
-    $headerElement.setAttribute('username', TokenService.getUserLoggedId());
-    $headerElement.setAttribute('logged', TokenService.isLogged().toString());
-    $headerElement.addEventListener('logout', TokenService.logout);
-    $header.appendChild($headerElement);
+    console.log(TokenService.getUserLoggedId());
 }
 
 async function search(event) {
@@ -33,10 +27,6 @@ async function search(event) {
                     $subject.setAttribute('code', subject.id);
                     $subject.setAttribute('name', subject.name);
                     $subject.setAttribute('show-detail', TokenService.isLogged().toString());
-                    $subject.addEventListener('detail', (event) => {
-                        console.log(event.detail.code);
-                        console.log(event.detail);
-                    });
                     $result.appendChild($subject);
                 });
             } else {
