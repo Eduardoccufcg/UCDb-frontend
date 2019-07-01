@@ -1,6 +1,6 @@
 import { doLogin }   from '../../services/AuthService.js';
 import TokenService  from '../../services/TokenService.js';
-import { showError } from '../../controllers/MainController.js';
+import { showError } from '../utils.js';
 
 document
     .querySelector('#authForm')

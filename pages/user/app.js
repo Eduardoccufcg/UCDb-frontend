@@ -1,4 +1,4 @@
-import { showError, showSuccess } from '../../controllers/MainController.js';
+import { showError, showSuccess } from '../utils.js';
 import { createUser }             from '../../services/UserService.js';
 import User                       from '../../models/User.js';
 

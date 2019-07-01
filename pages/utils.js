@@ -1,4 +1,4 @@
-import '../components/alert-message/index.js';
+import '../components/alert-message';
 
 function showMessage(message, type) {
     const $message = document.getElementById('message');

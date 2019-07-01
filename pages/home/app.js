@@ -2,7 +2,7 @@ import '../../components/subject-item/index.js';
 import '../../components/alert-message/index.js';
 import '../../components/header-menu/index.js';
 import TokenService  from '../../services/TokenService.js';
-import { searchSubjects } from '../../services/SubjectService.js';
+import { searchSubjects, getSubject } from '../../services/SubjectService.js';
 
 document
     .querySelector('#searchSubject input')
@@ -33,9 +33,10 @@ async function search(event) {
                     $subject.setAttribute('code', subject.id);
                     $subject.setAttribute('name', subject.name);
                     $subject.setAttribute('show-detail', TokenService.isLogged().toString());
-                    $subject.addEventListener('detail', (event) => {
+                    $subject.addEventListener('detail', event => {
                         console.log(event.detail.code);
                         console.log(event.detail);
+                        showDetail(event.detail.code);
                     });
                     $result.appendChild($subject);
                 });
@@ -50,6 +51,15 @@ async function search(event) {
     } else if ($search.value.length === 0) {
         $result.innerHTML = '';
         $search.parentElement.classList.remove('hover');
+    }
+}
+
+async function showDetail(idSubject) {
+    try {
+        const subject = await getSubject(idSubject, TokenService.getUserLoggedId());
+        console.log(subject);
+    }catch (e) {
+        console.log(e);
     }
 }
 
