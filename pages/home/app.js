@@ -46,7 +46,6 @@ async function search(event) {
                     $subject.setAttribute('name', subject.name);
                     $subject.setAttribute('show-detail', TokenService.isLogged().toString());
                     $subject.addEventListener('detail', event => {
-                        //showDetail(event.detail.code);
                         window.location.href = `../subject/index.html?id=${event.detail.code}`;
                     });
                     $result.appendChild($subject);
@@ -62,15 +61,6 @@ async function search(event) {
     } else if ($search.value.length === 0) {
         $result.innerHTML = '';
         $search.parentElement.classList.remove('hover');
-    }
-}
-
-async function showDetail(idSubject) {
-    try {
-        const subject = await getSubject(idSubject, TokenService.getUserLoggedId());
-        console.log(subject);
-    } catch (e) {
-        console.log(e);
     }
 }
 

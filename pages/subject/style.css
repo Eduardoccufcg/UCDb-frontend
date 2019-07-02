@@ -45,59 +45,6 @@ body {
     color: rgb(35, 174, 233);
 }
 
-.button-like {
-    grid-area: like;
-    align-self: center;
-    justify-self: center;
-}
-
-.button-like button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-    width: 100%;
-    height: 40px;
-    background-color: #fff;
-    font-size: 14px;
-    color: #002f55;
-    line-height: 1.2;
-    transition: all .7s;
-    cursor: pointer;
-    margin-top: 20px;
-    font-weight: bold;
-    border-radius: 5px;
-    border: 2px solid #fff;
-}
-
-button i {
-    margin-right: 5px;
-}
-
-.button-like span {
-    color: #ffffff;
-    margin: 5px 0;
-    display: inline-block;
-    text-align: center;
-    width: 100%;
-    font-size: .9em;
-}
-
-.button-like button.liked,
-.button-like button:hover{
-    background-color: #2b87e9;
-    color: #fff;
-    border: 2px solid #35ceff;
-}
-
-.button-like button.liked i,
-.button-like button:hover i{
-    color: #ff3367;
-}
-.button-like button:hover {
-    background: rgba(0,0,0,.15);
-}
-
 input {
     position: absolute;
     top: 0;

@@ -36,6 +36,16 @@ export default class TokenService {
     }
 
     /**
+     * Return the first name by logged user.
+     * @returns string
+     */
+    static getUserFirstName() {
+        if(this.isLogged()) {
+            return this.getPayload().firstName;
+        }
+    }
+
+    /**
      * Verify if has auth token.
      * @returns {boolean}
      */
