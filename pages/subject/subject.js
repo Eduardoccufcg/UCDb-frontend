@@ -1,10 +1,14 @@
 import '../../components/alert-message/index.js';
 import '../../components/header-menu/header-menu.js';
 import '../../components/button-like/button-like.js';
-import TokenService                  from '../../services/TokenService.js';
-import CommentService                from '../../services/CommentService.js';
-import { getSubject, toLikeSubject } from '../../services/SubjectService.js';
-import Comment                       from "../../models/Comment.js";
+import '../../components/comment-item/comment-item.js';
+import TokenService   from '../../services/TokenService.js';
+import CommentService from '../../services/CommentService.js';
+import SubjectService from '../../services/SubjectService.js';
+import Comment        from "../../models/Comment.js";
+
+
+document.addEventListener('DOMContentLoaded', init);
 
 /**
  * Initialize app.
@@ -23,10 +27,77 @@ async function sendComment(event) {
         const comment = new Comment(0, $textComment.value);
         const commentSave = await CommentService.save(getCurrentIdSubject(), comment);
         $textComment.value = '';
-        console.log(commentSave);
+        addComment(commentSave);
     } catch (error) {
         console.log(error.message);
     }
+}
+
+async function sendReply(event) {
+    try {
+        event.preventDefault();
+        const reply = await CommentService.reply(event.detail.code, event.detail.message);
+        addReply(reply, event.detail.code);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+function addComments(comments) {
+    const $comments = document.getElementById('show-comments');
+    $comments.innerHTML = '';
+
+    comments.forEach(comment => {
+        if(!comment.deleted) {
+            addComment(comment)
+        }
+    });
+}
+
+function addReplies(replies, idComment) {
+    if (replies.length > 0) {
+        replies.forEach(reply => {
+            if(!reply.deleted) {
+                addReply(reply, idComment);
+                addReplies(reply.answers, reply.idComment);
+            }
+        });
+    }
+}
+
+function addReply(reply, idComment) {
+    const $replies = document.querySelector(`span.replies-${idComment}`);
+    console.log('span', $replies);
+    const $replyItem = document.createElement('comment-item');
+    $replyItem.setAttribute('code', reply.idComment);
+    $replyItem.setAttribute('message', reply.text);
+    $replyItem.setAttribute('date', reply.date);
+    $replyItem.setAttribute('author', `${reply.user.firstName} ${reply.user.lastName}`);
+    $replyItem.setAttribute('show-remove', reply.userLogInComment);
+    $replyItem.addEventListener('reply', sendReply);
+    $replies.appendChild($replyItem);
+
+    const $repliesReply = document.createElement('span');
+    $repliesReply.classList.add(`replies-${reply.idComment}`);
+    $replies.appendChild($repliesReply);
+}
+
+function addComment(comment) {
+    const $comments = document.getElementById('show-comments');
+    const $commentItem = document.createElement('comment-item');
+    $commentItem.setAttribute('code', comment.idComment);
+    $commentItem.setAttribute('message', comment.text);
+    $commentItem.setAttribute('date', comment.date);
+    $commentItem.setAttribute('author', `${comment.user.firstName} ${comment.user.lastName}`);
+    $commentItem.setAttribute('show-remove', comment.userLogInComment);
+    $commentItem.addEventListener('reply', sendReply);
+    $comments.appendChild($commentItem);
+
+    const $replies = document.createElement('span');
+    $replies.classList.add(`replies-${comment.idComment}`);
+    $comments.appendChild($replies);
+
+    addReplies(comment.answers, comment.idComment);
 }
 
 /**
@@ -72,7 +143,7 @@ function addTitle(id, title) {
  * @returns {Promise<void>}
  */
 async function likeSubject(id) {
-    await toLikeSubject(id, TokenService.getUserLoggedId());
+    await SubjectService.like(id);
 }
 
 /**
@@ -82,9 +153,10 @@ async function likeSubject(id) {
  */
 async function getDetail(id) {
     try {
-        const subject = await getSubject(id, TokenService.getUserLoggedId());
-        addTitle(id, subject.discipline.name);
+        const subject = await SubjectService.find(id);
+        addTitle(id, subject.name);
         addButtonLike(id, subject.userLogInLike, subject.numLikes);
+        addComments(subject.comments);
     } catch (e) {
         console.log(e);
     }
@@ -93,5 +165,3 @@ async function getDetail(id) {
 function getCurrentIdSubject() {
     return location.search.substring(4);
 }
-
-init();

@@ -1,5 +1,5 @@
 import { API_URL }      from "../constants.js";
-import { handlerError } from "./HTTPService.js";
+import HTTPService from "./HTTPService.js";
 
 const apiUrl = API_URL + "/users";
 
@@ -13,5 +13,5 @@ export async function createUser(user) {
         }
     });
 
-    return handlerError(response);
+    return HTTPService.getResponse(response);
 }

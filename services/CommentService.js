@@ -1,7 +1,7 @@
 import { API_URL } from "../constants.js";
 import HTTPService from './HTTPService.js';
 
-const apiUrl = API_URL + "/profiles/comment";
+const apiUrl = API_URL + "/comments";
 
 class CommentService {
 
@@ -16,6 +16,16 @@ class CommentService {
             method: 'POST',
             headers: HTTPService.getHeaders(),
             body: JSON.stringify(CommentService.commentToJSON(comment)),
+        });
+
+        return HTTPService.getResponse(response);
+    }
+
+    static async reply(idComment, text) {
+        let response = await fetch(`${apiUrl}/reply/${idComment}`, {
+            method: 'POST',
+            headers: HTTPService.getHeaders(),
+            body: JSON.stringify({ text }),
         });
 
         return HTTPService.getResponse(response);
