@@ -1,15 +1,17 @@
 export default class Subject {
-    constructor(code, name) {
-        this._code = code;
+
+    constructor(id, name) {
+        this._id = id;
         this._name = name;
+        this._comments = [];
     }
 
-    get code() {
-        return this._code;
+    get id() {
+        return this._id;
     }
 
-    set code(code) {
-        this._code = code;
+    set id(id) {
+        this._id = id;
     }
 
     get name() {
@@ -18,5 +20,13 @@ export default class Subject {
 
     set name(name) {
         this._name = name;
+    }
+
+    get comments() {
+        return this._comments;
+    }
+
+    set comments(comments) {
+        this._comments = comments;
     }
 }

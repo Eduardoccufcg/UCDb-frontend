@@ -38,7 +38,7 @@ async function search(event) {
             if (subjects.length > 0) {
                 subjects.forEach(subject => {
                     let $subject = document.createElement('subject-item');
-                    $subject.setAttribute('code', subject.id);
+                    $subject.setAttribute('id', subject.id);
                     $subject.setAttribute('name', subject.name);
                     $subject.setAttribute('show-detail', TokenService.isLogged().toString());
                     $subject.addEventListener('detail', event => {

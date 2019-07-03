@@ -10,6 +10,8 @@ class HTTPService {
         if (TokenService.hasToken()) {
             headers[ 'Authorization' ] = `Bearer ${TokenService.getToken()}`;
         }
+
+        return headers;
     }
 
     static async getResponse(response) {

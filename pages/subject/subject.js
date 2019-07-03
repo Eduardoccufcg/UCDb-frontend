@@ -2,16 +2,31 @@ import '../../components/alert-message/index.js';
 import '../../components/header-menu/header-menu.js';
 import '../../components/button-like/button-like.js';
 import TokenService                  from '../../services/TokenService.js';
+import CommentService                from '../../services/CommentService.js';
 import { getSubject, toLikeSubject } from '../../services/SubjectService.js';
+import Comment                       from "../../models/Comment.js";
 
 /**
  * Initialize app.
  * @returns {Promise<void>}
  */
 async function init() {
-    const id = location.search.substring(4);
-    await getDetail(id);
     addHeader();
+    await getDetail(getCurrentIdSubject());
+    document.getElementById('commentForm').addEventListener('submit', sendComment);
+}
+
+async function sendComment(event) {
+    try {
+        event.preventDefault();
+        const $textComment = document.getElementById('comment-text');
+        const comment = new Comment(0, $textComment.value);
+        const commentSave = await CommentService.save(getCurrentIdSubject(), comment);
+        $textComment.value = '';
+        console.log(commentSave);
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 /**
@@ -42,7 +57,7 @@ function addButtonLike(id, liked, counter) {
 }
 
 /**
- * Show title and code in the view.
+ * Show title and id in the view.
  * @param id
  * @param title
  */
@@ -73,6 +88,10 @@ async function getDetail(id) {
     } catch (e) {
         console.log(e);
     }
+}
+
+function getCurrentIdSubject() {
+    return location.search.substring(4);
 }
 
 init();

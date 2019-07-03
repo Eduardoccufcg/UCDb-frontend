@@ -226,10 +226,10 @@ textarea {
 }
 
 textarea:focus {
-    border: 1px solid #aaaaaa;
+    border: 1px solid #2c7fe9;
 }
 
-button.reply {
+button.btn-primary {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -247,7 +247,7 @@ button.reply {
     border: 2px solid #fff;
 }
 
-button.reply:hover {
+button.btn-primary:hover {
     background-color: #285daf;
 }
 

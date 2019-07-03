@@ -18,7 +18,6 @@
                 </header>
             </div>
         </section>
-
         <section id="comments">
             <div class="container">
                 <header>
@@ -86,13 +85,11 @@
                         </div>
                     </div>
                 </div>
-                <form>
+                <form id="commentForm" method="post">
                     <div class="field">
-                        <textarea spellcheck="false"></textarea>
+                        <textarea id="comment-text" spellcheck="false" required></textarea>
                     </div>
-                    <button class="reply">
-                        <i class="fas fa-edit"></i> Add Comment
-                    </button>
+                    <button type="submit" class="btn-primary">Adicionar Comentário</button>
                 </form>
             </div>
         </section>

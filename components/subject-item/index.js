@@ -5,7 +5,7 @@ class SubjectItem extends HTMLElement {
     }
 
     connectedCallback() {
-        this.code = this.getAttribute('code');
+        this.code = this.getAttribute('id');
         this.name = this.getAttribute('name');
         this.showDetail = this.getAttribute('show-detail');
         this.render();

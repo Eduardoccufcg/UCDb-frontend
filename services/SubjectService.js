@@ -12,8 +12,8 @@ export async function searchSubjects(search) {
     return HTTPService.getResponse(response);
 }
 
-export async function getSubject(id, idUser) {
-    let response = await fetch(`${API_URL}/profiles/${id}/${idUser}`, {
+export async function getSubject(id) {
+    let response = await fetch(`${API_URL}/profiles/${id}`, {
         method: 'GET',
         headers: HTTPService.getHeaders()
     });
@@ -21,8 +21,8 @@ export async function getSubject(id, idUser) {
     return HTTPService.getResponse(response);
 }
 
-export async function toLikeSubject(id, idUser) {
-    let response = await fetch(`${API_URL}/profiles/like/${id}/${idUser}`, {
+export async function toLikeSubject(id) {
+    let response = await fetch(`${API_URL}/profiles/like/${id}`, {
         method: 'POST',
         headers: HTTPService.getHeaders()
     });
