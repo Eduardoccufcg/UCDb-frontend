@@ -22,6 +22,7 @@ class CommentItem extends HTMLElement {
         }
 
         this.render();
+        this.addEventRemove();
         this.$shadow
             .querySelector('a.reply')
             .addEventListener('click', event => {
@@ -31,14 +32,7 @@ class CommentItem extends HTMLElement {
     }
 
     showLinkRemove() {
-        let linkRemove = '';
-
-        if (this.showRemove) {
-            linkRemove = `<a class="remove">Remover</a>`;
-            this.addEventRemove();
-        }
-
-        return linkRemove;
+        return this.showRemove ? '<a class="remove">Remover</a>' : '';
     }
 
     formatDate(date) {
@@ -91,20 +85,20 @@ class CommentItem extends HTMLElement {
     }
 
     addEventRemove() {
-        const $buttonRemove = this.$shadow.querySelector('a.remove');
-        $buttonRemove.addEventListener('click', event => {
-            event.preventDefault();
-            this.dispatchEvent(new CustomEvent('remove', {
-                bubbles: true,
-                cancelable: false,
-                composed: true,
-                detail: {
-                    code: this.code
-                }
-            }));
-
-            this.$shadow.removeChild(this.$shadow);
-        });
+        if (this.showRemove) {
+            const $buttonRemove = this.$shadow.querySelector('a.remove');
+            $buttonRemove.addEventListener('click', event => {
+                event.preventDefault();
+                this.dispatchEvent(new CustomEvent('remove', {
+                    bubbles: true,
+                    cancelable: false,
+                    composed: true,
+                    detail: {
+                        code: this.code
+                    }
+                }));
+            });
+        }
     }
 
     removeFormReply() {

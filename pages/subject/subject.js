@@ -5,8 +5,8 @@ import '../../components/comment-item/comment-item.js';
 import TokenService   from '../../services/TokenService.js';
 import CommentService from '../../services/CommentService.js';
 import SubjectService from '../../services/SubjectService.js';
-import Comment        from "../../models/Comment.js";
 
+const URL_LOGIN = '../login/';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -15,17 +15,20 @@ document.addEventListener('DOMContentLoaded', init);
  * @returns {Promise<void>}
  */
 async function init() {
-    addHeader();
-    await getDetail(getCurrentIdSubject());
-    document.getElementById('commentForm').addEventListener('submit', sendComment);
+    if(TokenService.isLogged()) {
+        addHeader();
+        await getDetail(getCurrentIdSubject());
+        document.getElementById('commentForm').addEventListener('submit', sendComment);
+    } else {
+        window.location.href = URL_LOGIN;
+    }
 }
 
 async function sendComment(event) {
     try {
         event.preventDefault();
         const $textComment = document.getElementById('comment-text');
-        const comment = new Comment(0, $textComment.value);
-        const commentSave = await CommentService.save(getCurrentIdSubject(), comment);
+        const commentSave = await CommentService.save(getCurrentIdSubject(), $textComment.value);
         $textComment.value = '';
         addComment(commentSave);
     } catch (error) {
@@ -35,6 +38,7 @@ async function sendComment(event) {
 
 async function sendReply(event) {
     try {
+        console.log('respondi....', event.detail.code);
         event.preventDefault();
         const reply = await CommentService.reply(event.detail.code, event.detail.message);
         addReply(reply, event.detail.code);
@@ -65,9 +69,17 @@ function addReplies(replies, idComment) {
     }
 }
 
+async function removeComment(event) {
+    try {
+        await CommentService.remove(event.detail.code);
+        removeDOMComment(event.target, event.detail.code);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 function addReply(reply, idComment) {
     const $replies = document.querySelector(`span.replies-${idComment}`);
-    console.log('span', $replies);
     const $replyItem = document.createElement('comment-item');
     $replyItem.setAttribute('code', reply.idComment);
     $replyItem.setAttribute('message', reply.text);
@@ -75,11 +87,18 @@ function addReply(reply, idComment) {
     $replyItem.setAttribute('author', `${reply.user.firstName} ${reply.user.lastName}`);
     $replyItem.setAttribute('show-remove', reply.userLogInComment);
     $replyItem.addEventListener('reply', sendReply);
+    $replyItem.addEventListener('remove', removeComment);
     $replies.appendChild($replyItem);
 
     const $repliesReply = document.createElement('span');
     $repliesReply.classList.add(`replies-${reply.idComment}`);
     $replies.appendChild($repliesReply);
+}
+
+function removeDOMComment($dom, idComment) {
+    const $replies = document.querySelector(`span.replies-${idComment}`);
+    $replies.parentElement.removeChild($replies);
+    $dom.parentElement.removeChild($dom);
 }
 
 function addComment(comment) {
@@ -91,6 +110,7 @@ function addComment(comment) {
     $commentItem.setAttribute('author', `${comment.user.firstName} ${comment.user.lastName}`);
     $commentItem.setAttribute('show-remove', comment.userLogInComment);
     $commentItem.addEventListener('reply', sendReply);
+    $commentItem.addEventListener('remove', removeComment);
     $comments.appendChild($commentItem);
 
     const $replies = document.createElement('span');
