@@ -1,4 +1,4 @@
-import './pages/home/app.js';
+import './pages/home/home.js';
 
 // getElementById wrapper
 function $id(id) {

@@ -1,12 +1,20 @@
 import '../../components/subject-item/index.js';
 import '../../components/alert-message/index.js';
-import '../../components/header-menu/index.js';
-import TokenService                   from '../../services/TokenService.js';
-import { searchSubjects, getSubject } from '../../services/SubjectService.js';
+import '../../components/header-menu/header-menu.js';
+import TokenService       from '../../services/TokenService.js';
+import { searchSubjects } from '../../services/SubjectService.js';
 
-document
-    .querySelector('#searchSubject input')
-
+function init() {
+    const $searchBar = document.querySelector('#searchSubject input');
+    $searchBar.addEventListener('keyup', search);
+    $searchBar.addEventListener('focus', event => event.target.parentElement.classList.add('hover'));
+    $searchBar.addEventListener('blur', event => {
+        if (event.target.value === '') {
+            event.target.parentElement.classList.remove('hover');
+        }
+    });
+    addHeader();
+}
 
 function addHeader() {
     const $header = document.getElementById('main-header');
@@ -15,18 +23,6 @@ function addHeader() {
     $headerElement.setAttribute('logged', TokenService.isLogged().toString());
     $headerElement.addEventListener('logout', TokenService.logout);
     $header.appendChild($headerElement);
-}
-
-function init() {
-    const $searchBar = document.querySelector('#searchSubject input');
-    $searchBar.addEventListener('keyup', search);
-    $searchBar.addEventListener('focus', event => event.target.parentElement.classList.add('hover'));
-    $searchBar.addEventListener('blur', event => {
-       if(event.target.value === '') {
-           event.target.parentElement.classList.remove('hover');
-       }
-    });
-    addHeader();
 }
 
 async function search(event) {

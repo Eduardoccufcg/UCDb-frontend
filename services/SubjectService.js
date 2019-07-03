@@ -9,7 +9,7 @@ export async function searchSubjects(search) {
         headers: HTTPService.getHeaders()
     });
 
-    return HTTPService.handlerError(response);
+    return HTTPService.getResponse(response);
 }
 
 export async function getSubject(id, idUser) {
@@ -18,7 +18,7 @@ export async function getSubject(id, idUser) {
         headers: HTTPService.getHeaders()
     });
 
-    return HTTPService.handlerError(response);
+    return HTTPService.getResponse(response);
 }
 
 export async function toLikeSubject(id, idUser) {
@@ -27,5 +27,5 @@ export async function toLikeSubject(id, idUser) {
         headers: HTTPService.getHeaders()
     });
 
-    return HTTPService.handlerError(response);
+    return HTTPService.getResponse(response);
 }
