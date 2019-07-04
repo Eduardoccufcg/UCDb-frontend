@@ -1,8 +1,8 @@
 import '../../components/subject-item/index.js';
 import '../../components/alert-message/index.js';
 import '../../components/header-menu/header-menu.js';
-import TokenService       from '../../services/TokenService.js';
-import { searchSubjects } from '../../services/SubjectService.js';
+import TokenService   from '../../services/TokenService.js';
+import SubjectService from '../../services/SubjectService.js';
 
 function init() {
     const $searchBar = document.querySelector('#searchSubject input');
@@ -34,7 +34,7 @@ async function search(event) {
             $result.innerHTML = '';
             $search.parentElement.classList.add('hover');
 
-            const subjects = await searchSubjects($search.value);
+            const subjects = await SubjectService.search($search.value);
             if (subjects.length > 0) {
                 subjects.forEach(subject => {
                     let $subject = document.createElement('subject-item');
