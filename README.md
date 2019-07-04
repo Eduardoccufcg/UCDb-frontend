@@ -4,7 +4,7 @@ Projeto final da disciplina Projeto de Software na Universidade Federal de Campi
 ## Sobre o desenvolvimento
 
 O projeto foi desenvolvido puramente com HTML/CSS/JavaScript, não utilizamos nenhum framework para o desenvolvimento.
-Está disponível em [https://ucdbapp.herokuapp.com](https://ucdbapp.herokuapp.com).
+Está disponível em [https://ucdbapp.herokuapp.com](https://ucdbapp.herokuapp.com) e o vídeo demostrativo [aqui](https://youtu.be/lOHH4bHjI9w).
 
 A estrutura do projeto consiste:
 
