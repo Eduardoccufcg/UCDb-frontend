@@ -28,10 +28,12 @@ class HeaderMenu extends HTMLElement {
 
     getMenuUser() {
         if (this.logged === 'true' || this.logged === '1') {
-            return `<li id="logout"><a href="#">Sair</a></li>`;
-        } else {
             return `
                 <li><a href="../ranking/index.html">Top 10</a></li>
+                <li id="logout"><a href="#">Sair</a></li>
+            `;
+        } else {
+            return `
                 <li><a href="../user/index.html">Cadastrar</a></li>
                 <li><a href="../login/index.html">Entrar</a></li>
             `;
