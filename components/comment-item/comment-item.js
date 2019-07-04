@@ -23,12 +23,14 @@ class CommentItem extends HTMLElement {
 
         this.render();
         this.addEventRemove();
+        this.addEventReply();
+
         this.$shadow
             .querySelector('a.reply')
             .addEventListener('click', event => {
                 this.showFormReply(event);
-                this.addEventReply();
             });
+
     }
 
     showLinkRemove() {
@@ -66,18 +68,18 @@ class CommentItem extends HTMLElement {
 
     addEventReply() {
         const $formReply = this.$shadow.querySelector('form');
-        const $textReply = this.$shadow.querySelector('.text-reply');
-        $textReply.focus();
 
         $formReply.addEventListener('submit', event => {
             event.preventDefault();
+            const $textReply = this.$shadow.querySelector('.text-reply');
+
             this.dispatchEvent(new CustomEvent('reply', {
                 bubbles: true,
                 cancelable: false,
                 composed: true,
                 detail: {
-                    message: $textReply.value,
-                    code: this.code
+                    code: this.code,
+                    message: $textReply.value
                 }
             }));
             this.removeFormReply();
@@ -89,6 +91,8 @@ class CommentItem extends HTMLElement {
             const $buttonRemove = this.$shadow.querySelector('a.remove');
             $buttonRemove.addEventListener('click', event => {
                 event.preventDefault();
+
+
                 this.dispatchEvent(new CustomEvent('remove', {
                     bubbles: true,
                     cancelable: false,
@@ -114,6 +118,8 @@ class CommentItem extends HTMLElement {
             <button type="button" class="cancel">Cancelar</button>
         `;
 
+        this.$shadow.querySelector('.text-reply').focus();
+
         const $buttonCancel = this.$shadow.querySelector('button.cancel');
         $buttonCancel.addEventListener('click', () => this.removeFormReply());
     }
@@ -123,7 +129,7 @@ class CommentItem extends HTMLElement {
         ${this.getStyle()}
         <div class="comment">
             <a class="avatar">
-                <img src="avatar.png">
+                <img src="https://robohash.org/${this.author}?set=set2">
             </a>
             <div class="content">
                 <a class="author">${this.author}</a>
@@ -157,6 +163,8 @@ class CommentItem extends HTMLElement {
                     height: auto;
                     float: left;
                     margin: .2em 0 0;
+                    background-color: #eee;
+                    border-radius: .25rem;
                 }
                 .avatar img{
                     display: block;

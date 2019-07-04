@@ -1,4 +1,4 @@
-class SubjectItem extends HTMLElement {
+class RankingItem extends HTMLElement {
     constructor() {
         super();
         this.$shadow = this.attachShadow({ mode: 'open' });
@@ -7,7 +7,7 @@ class SubjectItem extends HTMLElement {
     connectedCallback() {
         this.code = this.getAttribute('code');
         this.name = this.getAttribute('name');
-        this.showDetail = this.getAttribute('show-detail');
+        this.counter = this.getAttribute('counter');
         this.render();
 
         this.detailEvent = new CustomEvent('detail', {

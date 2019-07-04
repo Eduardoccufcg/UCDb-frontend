@@ -19,7 +19,8 @@ class HeaderMenu extends HTMLElement {
     addEventLogout() {
         const $buttonLogout = this.$shadow.querySelector('#logout');
         if (this.$shadow.contains($buttonLogout)) {
-            $buttonLogout.addEventListener('click', () => {
+            $buttonLogout.addEventListener('click', event => {
+                event.preventDefault();
                 this.dispatchEvent(this.logoutEvent)
             });
         }
@@ -31,7 +32,8 @@ class HeaderMenu extends HTMLElement {
         } else {
             return `
                 <li><a href="../user/index.html">Cadastrar</a></li>
-                <li><a href="../login/index.html">Entrar</a></li>`;
+                <li><a href="../login/index.html">Entrar</a></li>
+            `;
         }
     }
 
@@ -46,70 +48,79 @@ class HeaderMenu extends HTMLElement {
 
     render() {
         this.$shadow.innerHTML = `
-        <style>
-            header {
-                display: grid;
-                grid-template-columns: 1fr auto auto;
-                grid-template-areas: "logo user menu";
-                grid-column-gap: 1em;
-                align-items: center;
-                background-color: #002f55;
-                color: #fff;
-                font-weight: bold;
-                height: 60px;
-                justify-content: center;
-                width: 100%;
-                padding: 0 20px;
-            }
-            header .brand {
-                grid-area: logo;
-                justify-self: start;
-            }
-            header .brand img {
-                height: 40px;
-            }
-            header nav {
-                grid-area: menu;
-                justify-self: end;
-            }
-            header ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            header ul li {
-                display: inline;
-                text-transform: uppercase;
-            }
-            header ul li a {
-                padding: 10px;
-                display: inline-block;
-                color: #fff;
-                text-decoration: none;
-                border-bottom:3px solid #2b87e9;
-            }
-            header ul li a:hover {
-                color: #2b87e9;
-                border-bottom:3px solid #285daf;
-            }
-            header #user-logged {
-                grid-area: user;
-                border-right: 1px dashed #2b87e9;
-                padding: 0 10px;
-            }
-        </style>
+        ${this.getStyle()}
         <header>
             <div class="brand">
-                <img src="../../logo_light.png" alt="UCDb">
+                <a href="../home/index.html">
+                    <img src="../../logo_light.png" alt="UCDb">
+                </a>
             </div>
             ${this.getUserLogged()}
             <nav id="menu">
                 <ul class="nav">
                     <li><a href="../home/index.html">Início</a></li>
+                    <li><a href="../ranking/index.html">Top 10</a></li>
                     ${this.getMenuUser()}
                 </ul>
             </nav>
         </header>`;
+    }
+
+    getStyle() {
+        return `
+            <style>
+                header {
+                    display: grid;
+                    grid-template-columns: 1fr auto auto;
+                    grid-template-areas: "logo user menu";
+                    grid-column-gap: 1em;
+                    align-items: center;
+                    background-color: #002f55;
+                    color: #fff;
+                    font-weight: bold;
+                    height: 60px;
+                    justify-content: center;
+                    width: 100%;
+                    padding: 0 20px;
+                }
+                header .brand {
+                    grid-area: logo;
+                    justify-self: start;
+                }
+                header .brand img {
+                    height: 40px;
+                }
+                header nav {
+                    grid-area: menu;
+                    justify-self: end;
+                }
+                header ul {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+                header ul li {
+                    display: inline;
+                    text-transform: uppercase;
+                }
+                header ul li a {
+                    padding: 10px;
+                    display: inline-block;
+                    color: #fff;
+                    text-decoration: none;
+                    border-bottom:3px solid #2b87e9;
+                }
+                header ul li a:hover {
+                    color: #2b87e9;
+                    border-bottom:3px solid #285daf;
+                }
+                header #user-logged {
+                    grid-area: user;
+                    border-right: 1px dashed #2b87e9;
+                    padding: 0 10px;
+                }
+            </style>
+        `;
     }
 }
 

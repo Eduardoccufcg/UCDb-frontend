@@ -1,10 +1,10 @@
 import '../../components/subject-item/index.js';
-import '../../components/alert-message/index.js';
+import '../../components/alert-message/alert-message.js';
 import '../../components/header-menu/header-menu.js';
 import TokenService   from '../../services/TokenService.js';
 import SubjectService from '../../services/SubjectService.js';
 
-function init() {
+function initialize() {
     const $searchBar = document.querySelector('#searchSubject input');
     $searchBar.addEventListener('keyup', search);
     $searchBar.addEventListener('focus', event => event.target.parentElement.classList.add('hover'));
@@ -19,7 +19,7 @@ function init() {
 function addHeader() {
     const $header = document.getElementById('main-header');
     const $headerElement = document.createElement('header-menu');
-    $headerElement.setAttribute('username', TokenService.getUserLoggedId());
+    $headerElement.setAttribute('username', TokenService.getUserFirstName());
     $headerElement.setAttribute('logged', TokenService.isLogged().toString());
     $headerElement.addEventListener('logout', TokenService.logout);
     $header.appendChild($headerElement);
@@ -38,11 +38,11 @@ async function search(event) {
             if (subjects.length > 0) {
                 subjects.forEach(subject => {
                     let $subject = document.createElement('subject-item');
-                    $subject.setAttribute('id', subject.id);
+                    $subject.setAttribute('code', subject.id);
                     $subject.setAttribute('name', subject.name);
                     $subject.setAttribute('show-detail', TokenService.isLogged().toString());
                     $subject.addEventListener('detail', event => {
-                        window.location.href = `../subject/index.html?id=${event.detail.code}`;
+                        window.location.href = `../subject/index.html?id=${subject.id}`;
                     });
                     $result.appendChild($subject);
                 });
@@ -60,4 +60,4 @@ async function search(event) {
     }
 }
 
-init();
+initialize();

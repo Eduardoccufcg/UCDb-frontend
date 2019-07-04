@@ -79,7 +79,7 @@ export default class TokenService {
 
     static logout() {
         window.localStorage.removeItem('authToken');
-        window.location.reload();
+        window.location.href = '../../pages/login';
     }
 
 }

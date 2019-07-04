@@ -1,17 +1,18 @@
-import { API_URL }      from "../constants.js";
+import { API_URL } from "../constants.js";
 import HTTPService from "./HTTPService.js";
 
 const apiUrl = API_URL + "/users";
 
-export async function createUser(user) {
-    let response = await fetch(`${apiUrl}/`, {
-        method: 'POST',
-        body: JSON.stringify(user.objectToRest()),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    });
+class UserService {
+    static async createUser(user) {
+        let response = await fetch(`${apiUrl}/`, {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: HTTPService.getHeaders()
+        });
 
-    return HTTPService.getResponse(response);
+        return HTTPService.getResponse(response);
+    }
 }
+
+export default UserService;

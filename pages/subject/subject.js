@@ -1,4 +1,4 @@
-import '../../components/alert-message/index.js';
+import '../../components/alert-message/alert-message.js';
 import '../../components/header-menu/header-menu.js';
 import '../../components/button-like/button-like.js';
 import '../../components/comment-item/comment-item.js';
@@ -7,117 +7,26 @@ import CommentService from '../../services/CommentService.js';
 import SubjectService from '../../services/SubjectService.js';
 
 const URL_LOGIN = '../login/';
+const URL_HOME = '../home/';
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', initialize);
 
 /**
- * Initialize app.
+ * Initialize page.
  * @returns {Promise<void>}
  */
-async function init() {
-    if(TokenService.isLogged()) {
+async function initialize() {
+    if (TokenService.isLogged() && getCurrentIdSubject()) {
         addHeader();
         await getDetail(getCurrentIdSubject());
         document.getElementById('commentForm').addEventListener('submit', sendComment);
+        document.addEventListener('reply', sendReply);
+        document.addEventListener('remove', removeComment);
+    } else if (!getCurrentIdSubject()) {
+        window.location.href = URL_HOME;
     } else {
         window.location.href = URL_LOGIN;
     }
-}
-
-async function sendComment(event) {
-    try {
-        event.preventDefault();
-        const $textComment = document.getElementById('comment-text');
-        const commentSave = await CommentService.save(getCurrentIdSubject(), $textComment.value);
-        $textComment.value = '';
-        addComment(commentSave);
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-async function sendReply(event) {
-    try {
-        console.log('respondi....', event.detail.code);
-        event.preventDefault();
-        const reply = await CommentService.reply(event.detail.code, event.detail.message);
-        addReply(reply, event.detail.code);
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-function addComments(comments) {
-    const $comments = document.getElementById('show-comments');
-    $comments.innerHTML = '';
-
-    comments.forEach(comment => {
-        if(!comment.deleted) {
-            addComment(comment)
-        }
-    });
-}
-
-function addReplies(replies, idComment) {
-    if (replies.length > 0) {
-        replies.forEach(reply => {
-            if(!reply.deleted) {
-                addReply(reply, idComment);
-                addReplies(reply.answers, reply.idComment);
-            }
-        });
-    }
-}
-
-async function removeComment(event) {
-    try {
-        await CommentService.remove(event.detail.code);
-        removeDOMComment(event.target, event.detail.code);
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-function addReply(reply, idComment) {
-    const $replies = document.querySelector(`span.replies-${idComment}`);
-    const $replyItem = document.createElement('comment-item');
-    $replyItem.setAttribute('code', reply.idComment);
-    $replyItem.setAttribute('message', reply.text);
-    $replyItem.setAttribute('date', reply.date);
-    $replyItem.setAttribute('author', `${reply.user.firstName} ${reply.user.lastName}`);
-    $replyItem.setAttribute('show-remove', reply.userLogInComment);
-    $replyItem.addEventListener('reply', sendReply);
-    $replyItem.addEventListener('remove', removeComment);
-    $replies.appendChild($replyItem);
-
-    const $repliesReply = document.createElement('span');
-    $repliesReply.classList.add(`replies-${reply.idComment}`);
-    $replies.appendChild($repliesReply);
-}
-
-function removeDOMComment($dom, idComment) {
-    const $replies = document.querySelector(`span.replies-${idComment}`);
-    $replies.parentElement.removeChild($replies);
-    $dom.parentElement.removeChild($dom);
-}
-
-function addComment(comment) {
-    const $comments = document.getElementById('show-comments');
-    const $commentItem = document.createElement('comment-item');
-    $commentItem.setAttribute('code', comment.idComment);
-    $commentItem.setAttribute('message', comment.text);
-    $commentItem.setAttribute('date', comment.date);
-    $commentItem.setAttribute('author', `${comment.user.firstName} ${comment.user.lastName}`);
-    $commentItem.setAttribute('show-remove', comment.userLogInComment);
-    $commentItem.addEventListener('reply', sendReply);
-    $commentItem.addEventListener('remove', removeComment);
-    $comments.appendChild($commentItem);
-
-    const $replies = document.createElement('span');
-    $replies.classList.add(`replies-${comment.idComment}`);
-    $comments.appendChild($replies);
-
-    addReplies(comment.answers, comment.idComment);
 }
 
 /**
@@ -145,6 +54,135 @@ function addButtonLike(id, liked, counter) {
     $buttonLike.setAttribute('counter', counter);
     $buttonLike.addEventListener('like', () => likeSubject(id));
     $like.appendChild($buttonLike);
+}
+
+/**
+ * Add all replies of the comment.
+ *
+ * @param replies
+ * @param idComment
+ */
+function addReplies(replies, idComment) {
+    if (replies.length > 0) {
+        replies.forEach(reply => {
+            if (!reply.deleted) {
+                addReply(reply, idComment);
+                addReplies(reply.answers, reply.idComment);
+            }
+        });
+    }
+}
+
+/**
+ * Add a new reply of the comment.
+ * @param reply
+ * @param idComment
+ */
+function addReply(reply, idComment) {
+    const $replies = document.querySelector(`span.replies-${idComment}`);
+    const $replyItem = document.createElement('comment-item');
+    $replyItem.setAttribute('code', reply.idComment);
+    $replyItem.setAttribute('message', reply.text);
+    $replyItem.setAttribute('date', reply.date);
+    $replyItem.setAttribute('author', `${reply.user.firstName} ${reply.user.lastName}`);
+    $replyItem.setAttribute('show-remove', reply.userLogInComment);
+    $replies.appendChild($replyItem);
+
+    const $repliesReply = document.createElement('span');
+    $repliesReply.classList.add(`replies-${reply.idComment}`);
+    $replies.appendChild($repliesReply);
+}
+
+/**
+ * Add all comments of the subject.
+ * @param comments
+ */
+function addComments(comments) {
+    const $comments = document.getElementById('show-comments');
+    $comments.innerHTML = '';
+
+    comments.forEach(comment => {
+        if (!comment.deleted) {
+            addComment(comment)
+        }
+    });
+}
+
+/**
+ * Add a comment of subject.
+ * @param comment
+ */
+function addComment(comment) {
+    const $comments = document.getElementById('show-comments');
+    const $commentItem = document.createElement('comment-item');
+    $commentItem.setAttribute('code', comment.idComment);
+    $commentItem.setAttribute('message', comment.text);
+    $commentItem.setAttribute('date', comment.date);
+    $commentItem.setAttribute('author', `${comment.user.firstName} ${comment.user.lastName}`);
+    $commentItem.setAttribute('show-remove', comment.userLogInComment);
+    $comments.appendChild($commentItem);
+
+    const $replies = document.createElement('span');
+    $replies.classList.add(`replies-${comment.idComment}`);
+    $comments.appendChild($replies);
+
+    addReplies(comment.answers, comment.idComment);
+}
+
+/**
+ * Send the comment to Service of API.
+ * @param event
+ * @returns {Promise<void>}
+ */
+async function sendComment(event) {
+    try {
+        event.preventDefault();
+        const $textComment = document.getElementById('comment-text');
+        const commentSave = await CommentService.save(getCurrentIdSubject(), $textComment.value);
+        $textComment.value = '';
+        addComment(commentSave);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+/**
+ * Send the reply of the comment to Service of API.
+ * @param event
+ * @returns {Promise<void>}
+ */
+async function sendReply(event) {
+    try {
+        const reply = await CommentService.reply(event.detail.code, event.detail.message);
+        addReply(reply, event.detail.code);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+/**
+ * Remove the comment to Service of API.
+ * @param event
+ * @returns {Promise<void>}
+ */
+async function removeComment(event) {
+    try {
+        await CommentService.remove(event.detail.code);
+        removeDOMComment(event.target, event.detail.code);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+/**
+ * Remove the web component comment-item and all replies of the comment.
+ * @param $dom
+ * @param idComment
+ */
+function removeDOMComment($dom, idComment) {
+    const $replies = document.querySelector(`span.replies-${idComment}`);
+    $replies.parentElement.removeChild($replies);
+    $dom.parentElement.removeChild($dom);
 }
 
 /**
@@ -182,6 +220,10 @@ async function getDetail(id) {
     }
 }
 
+/**
+ * Get the id of subject by url params.
+ * @returns {string}
+ */
 function getCurrentIdSubject() {
     return location.search.substring(4);
 }
