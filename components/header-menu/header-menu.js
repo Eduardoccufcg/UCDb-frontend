@@ -31,6 +31,7 @@ class HeaderMenu extends HTMLElement {
             return `<li id="logout"><a href="#">Sair</a></li>`;
         } else {
             return `
+                <li><a href="../ranking/index.html">Top 10</a></li>
                 <li><a href="../user/index.html">Cadastrar</a></li>
                 <li><a href="../login/index.html">Entrar</a></li>
             `;
@@ -59,7 +60,6 @@ class HeaderMenu extends HTMLElement {
             <nav id="menu">
                 <ul class="nav">
                     <li><a href="../home/index.html">Início</a></li>
-                    <li><a href="../ranking/index.html">Top 10</a></li>
                     ${this.getMenuUser()}
                 </ul>
             </nav>
