@@ -31,6 +31,15 @@ class SubjectService {
 
         return HTTPService.getResponse(response);
     }
+
+    static async ranking() {
+        let response = await fetch(`${apiUrl}/ranking/`, {
+            method: 'GET',
+            headers: HTTPService.getHeaders()
+        });
+
+        return HTTPService.getResponse(response);
+    }
 }
 
 export default SubjectService;

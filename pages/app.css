@@ -59,3 +59,17 @@ button.btn-primary:hover {
     background-color: #285daf;
 }
 
+#main-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "logo menu";
+    grid-column-gap: 1em;
+    align-items: center;
+    background-color: #002f55;
+    color: #fff;
+    font-weight: bold;
+    height: 60px;
+    justify-content: center;
+    width: 100%;
+    padding: 0 20px;
+}

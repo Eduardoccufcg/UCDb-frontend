@@ -1,4 +1,4 @@
-import '../../components/subject-item/index.js';
+import '../../components/subject-item/subject-item.js';
 import '../../components/alert-message/alert-message.js';
 import '../../components/header-menu/header-menu.js';
 import TokenService   from '../../services/TokenService.js';

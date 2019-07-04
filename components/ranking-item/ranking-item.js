@@ -5,6 +5,7 @@ class RankingItem extends HTMLElement {
     }
 
     connectedCallback() {
+        this.position = this.getAttribute('position');
         this.code = this.getAttribute('code');
         this.name = this.getAttribute('name');
         this.counter = this.getAttribute('counter');
@@ -16,22 +17,10 @@ class RankingItem extends HTMLElement {
             composed: true,
             detail: {
                 code: this.code,
-                name: this.name
             }
         });
 
         this.addEventDetail();
-    }
-
-    showButtonDetail() {
-        if (this.showDetail === 'true' || this.showDetail === '1') {
-            return `
-                <div class="detail">
-                    <button>Visualizar</button>
-                </div>`;
-        }
-
-        return '';
     }
 
     addEventDetail() {
@@ -48,12 +37,17 @@ class RankingItem extends HTMLElement {
     render() {
         this.$shadow.innerHTML = `
             ${this.getStyle()}
-            <div class="subject-item">
-                <p class="code">${this.code}</p>
+            <div class="ranking-item">
+                <p class="position">${this.position}</p>
                 <p class="name">
-                   ${this.name}
+                   ${this.code} - ${this.name}
                 </p>
-                ${this.showButtonDetail()}
+                <p class="counter">
+                   ${this.counter}
+                </p>
+                <div class="detail">
+                    <button>Visualizar</button>
+                </div>
             </div>
         `;
     }
@@ -61,10 +55,10 @@ class RankingItem extends HTMLElement {
     getStyle() {
         return `
             <style>
-                .subject-item {
+                .ranking-item {
                     display: grid;
-                    grid-template-columns: 7% auto auto;
-                    grid-template-areas: "code name detail";
+                    grid-template-columns: 7% auto 7% min-content;
+                    grid-template-areas: "position subject counter detail";
                     grid-column-gap: 1em;
                     border: 1px solid #ddd;
                     border-radius: 5px;
@@ -74,13 +68,13 @@ class RankingItem extends HTMLElement {
                     padding: 2px 16px;
                     transition: 0.3s;
                 }
-                .subject-item:hover {
+                .ranking-item:hover {
                     background-color: #c6def1;
                     border: 1px solid #fff;
                     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
                 }
-                .code {
-                    grid-area: code;
+                .position {
+                    grid-area: position;
                     justify-self: center;
                     align-self: center;
                     color: #2c7fe9;
@@ -88,11 +82,20 @@ class RankingItem extends HTMLElement {
                     font-weight: bolder;
                     text-align: right;
                 }
+                .counter {
+                    grid-area: counter;
+                    justify-self: end;
+                    align-self: center;
+                    color: #850300;
+                    font-size: 1.3em;
+                    font-weight: bolder;
+                    text-align: right;
+                }
                 .name {
-                    grid-area: name;
+                    grid-area: subject;
                     font-size: 1.3em;
                 }
-                .subject-item .detail {
+                .ranking-item .detail {
                     grid-area: detail;
                     justify-self: end;
                     align-self: center;
@@ -119,4 +122,4 @@ class RankingItem extends HTMLElement {
     }
 }
 
-window.customElements.define('subject-item', SubjectItem);
+window.customElements.define('ranking-item', RankingItem);
