@@ -51,7 +51,7 @@ utilizar *listeners* específicos em cada momento.
 Componente responsável por exibir um comentário com os atributos `code` (id do comentário), `message` (texto do comentário),
 `author` (autor do comentário) e `show-remove` (atributo booleano afim de definir se o comentário irá permitir a ação de removê-lo).
 Além dos atributos customizados, o `comment-item` disponibiliza dos seguintes eventos customizados:
-- `reply`: disparado quando o *link* de reposta é clicado, exibindo também um formulário.
+- `reply`: disparado quando o *link* de resposta é clicado, exibindo também um formulário.
 - `remove`: acionado quando o *link* de remover é clicado. No contexto dessa aplicação, só será exibido quando o usuário 
 logado for o autor do comentário.
 
