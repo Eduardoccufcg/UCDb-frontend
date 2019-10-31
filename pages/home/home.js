@@ -31,10 +31,12 @@ async function search(event) {
 
     if (event.which === 13 || $search.value.length >= 3) {
         try {
-            $result.innerHTML = '';
+
             $search.parentElement.classList.add('hover');
 
             const subjects = await SubjectService.search($search.value);
+            $result.innerHTML = '';
+
             if (subjects.length > 0) {
                 subjects.forEach(subject => {
                     let $subject = document.createElement('subject-item');
