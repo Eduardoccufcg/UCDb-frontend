@@ -10,8 +10,12 @@ class CommentItem extends HTMLElement {
         this.author = this.getAttribute('author');
 
        
-        this.showRemove = eval(this.getAttribute('show-remove'));
-        
+        if (!this.hasAttribute('show-remove')) {
+
+            this.showRemove = false;
+        } else {
+            this.showRemove = eval(this.getAttribute('show-remove'));
+        }
 
         if (!this.hasAttribute('date')) {
             this.date = new Date();
